@@ -2,14 +2,38 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './Apps/Screens/LoginScreen/Login';
 import { ClerkProvider,SignedIn, SignedOut  } from "@clerk/clerk-expo";
+import { NavigationContainer } from '@react-navigation/native';
+import * as SecureStore from "expo-secure-store";
+import TabNavigation from './Apps/Navigations/TabNavigation';
 
+const tokenCache = {
+  async getToken(key) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  async saveToken(key, value) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return;
+    }
+  },
+};
 
 export default function App() {
   return (
-    <ClerkProvider publishableKey={'pk_test_ZGFzaGluZy1maXNoLTc0LmNsZXJrLmFjY291bnRzLmRldiQ'}>
+    <ClerkProvider 
+      publishableKey={'pk_test_ZGFzaGluZy1maXNoLTc0LmNsZXJrLmFjY291bnRzLmRldiQ'}
+      // tokenCache={tokenCache}
+    >
       <View style={styles.container}>
           <SignedIn>
-              <Text style={{textAlign:'center',margin:50,borderWidth:1}}>You are Signed in</Text>
+              <NavigationContainer>
+                <TabNavigation/>
+              </NavigationContainer>
           </SignedIn>
           <SignedOut>
               <Login/>
@@ -26,3 +50,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+

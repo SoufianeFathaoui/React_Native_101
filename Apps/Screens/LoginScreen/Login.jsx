@@ -42,7 +42,6 @@ export default function Login() {
   )
 }
 
-
 const styles = StyleSheet.create({
   loginImage:{
     height:450,
