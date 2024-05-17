@@ -9,7 +9,7 @@ export default function App() {
     <ClerkProvider publishableKey={'pk_test_ZGFzaGluZy1maXNoLTc0LmNsZXJrLmFjY291bnRzLmRldiQ'}>
       <View style={styles.container}>
           <SignedIn>
-              <Text>You are Signed in</Text>
+              <Text style={{textAlign:'center',margin:50,borderWidth:1}}>You are Signed in</Text>
           </SignedIn>
           <SignedOut>
               <Login/>
