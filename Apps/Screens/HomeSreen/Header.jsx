@@ -1,31 +1,42 @@
-import { View, Text, Image, StyleSheet, TextInput } from 'react-native'
-import React from 'react'
-import { useAuth, useUser } from '@clerk/clerk-expo'
-import { FontAwesome } from '@expo/vector-icons';
+import React from 'react';
+import { View, Text, Image, StyleSheet, TextInput } from 'react-native';
+import { useAuth, useUser } from '@clerk/clerk-expo';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import Colors from '../../utils/Colors';
 
 export default function Header() {
-  const {user,isLoading}=useUser();//This useUser is a hook From clerk and it fetch the data from the expo server
-  //user&& it means if the user is exist show the view that inside() and if dosn't exist it don't show enything
-  return user&& (
+  const { user, isLoading } = useUser(); // useUser is a hook from Clerk that fetches the user data
+
+  // Only render the view if the user exists
+  return user && (
     <View style={styles.container}>
+      
+      {/* Profile Section */}
       <View style={styles.profileContainer1}>
+        
+        {/* User Info */}
         <View style={styles.profileContainer}>
-          <Image style={styles.userImage} source={{uri:user?.imageUrl}}/>
+          <Image style={styles.userImage} source={{ uri: user?.imageUrl }} />
           <View>
-            <Text style={{color:Colors.WHITE}}>Welcome</Text>
-            <Text style={{color:Colors.WHITE,fontWeight:'bold'}}>{user?.fullName}</Text>
+            <Text style={styles.welcomeText}>Welcome</Text>
+            <Text style={styles.userNameText}>{user?.fullName}</Text>
           </View>
         </View>
+        
+        {/* Bookmark Icon */}
         <View>
-            <FontAwesome name="bookmark" size={24} color="black" />
+          <FontAwesome name="bookmark" size={24} color="black" />
         </View>
       </View>
-      <View>
-        <TextInput style={styles.textInput} placeholder='Search'/>
+      
+      {/* Search Section */}
+      <View style={styles.search}>
+        <TextInput style={styles.textInput} placeholder="Search" />
+        <FontAwesome5 style={styles.searchBTN} name="search" size={24} color={Colors.PRIMARY} />
       </View>
+      
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -51,10 +62,27 @@ const styles = StyleSheet.create({
   textInput:{
     padding:6,
     paddingLeft:16,
-    marginTop:25,
     borderWidth:1,
-    borderRadius:99,
-    backgroundColor:Colors.WHITE
+    borderRadius:9,
+    width:'85%',
+    backgroundColor:Colors.WHITE,
+    fontSize:16,
+    fontFamily:'outfit-bold'
+  },
+  search:{
+    marginTop:25,
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    paddingRight:16,
+    marginBottom:10,
+  },
+  searchBTN:{
+    backgroundColor:Colors.WHITE,
+    padding:7,
+    borderRadius:9,
+    borderWidth:1,
   },
   userImage:{
     width:45,
